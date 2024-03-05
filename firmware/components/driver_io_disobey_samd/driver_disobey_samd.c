@@ -18,10 +18,10 @@
 static const char *TAG = "Disobey I/O";
 
 // mutex for accessing driver_disobey_samd_state, driver_disobey_samd_handlers, etc..
-xSemaphoreHandle driver_disobey_samd_mux = NULL;
+SemaphoreHandle_t driver_disobey_samd_mux = NULL;
 
 // semaphore to trigger disobey_samd interrupt handling
-xSemaphoreHandle driver_disobey_samd_intr_trigger = NULL;
+SemaphoreHandle_t driver_disobey_samd_intr_trigger = NULL;
 
 driver_disobey_samd_intr_t driver_disobey_samd_handler = NULL;
 

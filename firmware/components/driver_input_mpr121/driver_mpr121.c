@@ -17,9 +17,9 @@
 
 static const char *TAG = "mpr121";
 
-xSemaphoreHandle driver_mpr121_mux =
+SemaphoreHandle_t driver_mpr121_mux =
     NULL;  // mutex for accessing driver_mpr121_state, driver_mpr121_handlers, etc..
-xSemaphoreHandle driver_mpr121_intr_trigger =
+SemaphoreHandle_t driver_mpr121_intr_trigger =
     NULL;  // semaphore to trigger MPR121 interrupt handling
 
 driver_mpr121_intr_t driver_mpr121_handlers[12] = {NULL, NULL, NULL, NULL, NULL, NULL,

@@ -11,7 +11,7 @@
 #include <sdkconfig.h>
 #include <driver/gpio.h>
 
-#include <include/buses.h>
+#include <buses.h>
 #include "include/driver_am2320.h"
 
 #ifdef CONFIG_DRIVER_AM2320_ENABLE
@@ -69,14 +69,14 @@ float driver_am2320_get_humidity() {
 // get_humidity() unless you always want the most recent data.
 esp_err_t driver_am2320_read_sensor(float *temperature, float *humidity) {
   driver_i2c_write_byte(CONFIG_DRIVER_AM2320_I2C_BUS, CONFIG_DRIVER_AM2320_I2C_ADDRESS, 0x00);  // Wakeup sensor
-  vTaskDelay(2 / portTICK_RATE_MS);
+  vTaskDelay(2 / portTICK_PERIOD_MS);
 
   uint8_t read_config[3];
   read_config[0] = 0x03;  // Function
   read_config[1] = 0x00;  // Full register
   read_config[2] = 4;     // Number of registers to read
   driver_i2c_write_buffer(CONFIG_DRIVER_AM2320_I2C_BUS, CONFIG_DRIVER_AM2320_I2C_ADDRESS, read_config, 3);
-  vTaskDelay(2000 / portTICK_RATE_MS);  // Delay to allow sensor to measure (takes almost 2 seconds)
+  vTaskDelay(2000 / portTICK_PERIOD_MS);  // Delay to allow sensor to measure (takes almost 2 seconds)
 
   // 0: 0x03 Modbus byte
   // 1: 0x04 No. bytes data

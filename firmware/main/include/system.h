@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "esp_spi_flash.h"
+#include "spi_flash_mmap.h"
 #include "esp_system.h"
 
 #define MAGIC_OTA           1

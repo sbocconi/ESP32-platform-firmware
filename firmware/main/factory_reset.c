@@ -7,7 +7,7 @@
 #include "freertos/event_groups.h"
 #include "freertos/task.h"
 
-#include "esp_event_loop.h"
+#include "esp_event.h"
 #include "esp_log.h"
 #include "esp_ota_ops.h"
 #include "esp_partition.h"
@@ -24,7 +24,7 @@
 #include "compositor.h"
 
 #include "esp_partition.h"
-#include "esp_spi_flash.h"
+#include "spi_flash_mmap.h"
 
 #define TAG "factory-reset"
 
@@ -93,14 +93,14 @@ void graphics_show_fr(const char* text, uint8_t percentage, bool showPercentage,
 		#endif
 }
 
-static void __attribute__((noreturn)) task_fatal_error(void)
-{
-	ESP_LOGE(TAG, "Exiting task due to fatal error...");
-	graphics_show_fr("Failed!", 0, false, true);
-	vTaskDelay(5000 / portTICK_PERIOD_MS);
-	esp_restart();
-	(void)vTaskDelete(NULL);
-}
+// static void __attribute__((noreturn)) task_fatal_error(void)
+// {
+// 	ESP_LOGE(TAG, "Exiting task due to fatal error...");
+// 	graphics_show_fr("Failed!", 0, false, true);
+// 	vTaskDelay(5000 / portTICK_PERIOD_MS);
+// 	esp_restart();
+// 	(void)vTaskDelete(NULL);
+// }
 
 static void factory_reset_task(void *pvParameter)
 {
@@ -118,7 +118,7 @@ static void factory_reset_task(void *pvParameter)
 	}
 	while (partitions) {
 			const esp_partition_t* partition = esp_partition_get(partitions);
-			printf("Found FAT partition '%s' at address 0x%08x (%u bytes)\n",
+			printf("Found FAT partition '%s' at address 0x%lu (%lu bytes)\n",
 				partition->label,
 				partition->address,
 				partition->size
@@ -137,24 +137,29 @@ static void factory_reset_task(void *pvParameter)
 				graphics_show_fr("Error 2", 0, false, true);
 				vTaskDelay(1000 / portTICK_PERIOD_MS);
 			} else {
-				uint8_t prevProgress = 0;
-				for (uint32_t i = 0; i < amount_of_sectors; i++) {
-					uint8_t progress = (i*100)/amount_of_sectors;
-					if (progress != prevProgress) {
-						prevProgress = progress;
-						printf(" -> Erasing '%s'... (%u%%)\n", partition->label, progress);
-						graphics_show_fr(text, progress, true, false);
-						vTaskDelay(1 / portTICK_PERIOD_MS);
-					}
-					err = spi_flash_erase_sector(first_sector+i);
-					if (err != ESP_OK) {
-						printf("Erase error %u\n", err);
-						graphics_show_fr("Erase failed!", 0, false, true);
-					}
-					taskYIELD();
+				err = esp_flash_erase_region(NULL, first_sector, amount_of_sectors);
+				if (err != ESP_OK) {
+					printf("Erase error %u\n", err);
+					graphics_show_fr("Erase failed!", 0, false, true);
+				} else {
+					printf("'%s' has been erased\n", partition->label);
+					graphics_show_fr("Operation completed", 0, false, true);
 				}
-				printf("'%s' has been erased\n", partition->label);
-				graphics_show_fr("Operation completed", 0, false, true);
+				// uint8_t prevProgress = 0;
+				// for (uint32_t i = 0; i < amount_of_sectors; i++) {
+				// 	uint8_t progress = (i*100)/amount_of_sectors;
+				// 	if (progress != prevProgress) {
+				// 		prevProgress = progress;
+				// 		printf(" -> Erasing '%s'... (%u%%)\n", partition->label, progress);
+				// 		graphics_show_fr(text, progress, true, false);
+				// 		vTaskDelay(1 / portTICK_PERIOD_MS);
+				// 	}
+				// 	err = esp_flash_erase_region(NULL, first_sector, amount_of_sectors);
+				// 	if (err != ESP_OK) {
+				// 		printf("Erase error %u\n", err);
+				// 		graphics_show_fr("Erase failed!", 0, false, true);
+				// 	}
+					// taskYIELD();
 			}
 			partitions = esp_partition_next(partitions);
 			taskYIELD();

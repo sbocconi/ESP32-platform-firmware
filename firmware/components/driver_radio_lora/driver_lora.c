@@ -44,8 +44,8 @@
 
 #define TAG "lora"
 
-xSemaphoreHandle driver_lora_mux           = NULL; // Mutex for accessing the handler
-xSemaphoreHandle driver_lora_intr_trigger  = NULL; // Semaphore to trigger LoRa interrupt handling
+SemaphoreHandle_t driver_lora_mux           = NULL; // Mutex for accessing the handler
+SemaphoreHandle_t driver_lora_intr_trigger  = NULL; // Semaphore to trigger LoRa interrupt handling
 static spi_device_handle_t spi_device      = NULL; // SPI device handle for accessing the LoRa radio
 static bool __implicit                     = 0;    // LoRa header mode
 static long __frequency                    = 0;    // LoRa frequency

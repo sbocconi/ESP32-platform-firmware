@@ -1,4 +1,22 @@
+set(srcs
+	"buses.c"
+)
+
+set(includes
+	"include"
+)
+
+set(requires
+	""
+)
+
+set(priv_requires
+	"driver"
+)
+
 idf_component_register(
-  SRCS "buses.c"
-  INCLUDE_DIRS include
+	SRCS "${srcs}"
+	INCLUDE_DIRS ${includes}
+	REQUIRES ${requires}
+    PRIV_REQUIRES ${priv_requires}
 )

@@ -7,7 +7,7 @@
 #include "freertos/event_groups.h"
 #include "freertos/task.h"
 
-#include "esp_event_loop.h"
+#include "esp_event.h"
 #include "esp_log.h"
 #include "esp_ota_ops.h"
 #include "esp_partition.h"
@@ -23,11 +23,11 @@
 #include "lwip/sockets.h"
 #include "lwip/sys.h"
 
-#include "mbedtls/certs.h"
+#include "certs.h"
 #include "mbedtls/ctr_drbg.h"
 #include "mbedtls/entropy.h"
 #include "mbedtls/error.h"
-#include "mbedtls/net.h"
+#include "mbedtls/net_sockets.h"
 #include "mbedtls/platform.h"
 #include "mbedtls/ssl.h"
 #include "mbedtls/esp_debug.h"
@@ -128,37 +128,49 @@ void graphics_show(const char* text, uint8_t percentage, bool showPercentage, bo
 }
 
 /* the esp event-loop handler */
-static esp_err_t badge_ota_event_handler(void *ctx, system_event_t *event)
+static void badge_ota_event_handler(void* arg, esp_event_base_t event_base,
+                                int32_t event_id, void* event_data)
 {
-	switch (event->event_id) {
-		case SYSTEM_EVENT_STA_START:
-			esp_wifi_connect();
-			break;
-
-		case SYSTEM_EVENT_STA_GOT_IP:
-			xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
-			break;
-
-		case SYSTEM_EVENT_STA_DISCONNECTED:
-			/* This is a workaround as ESP32 WiFi libs don't currently
-			   auto-reassociate. */
-			esp_wifi_connect();
-			xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
-			break;
-
-		default:
-			break;
-	}
-	return ESP_OK;
+	if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START) {
+        esp_wifi_connect();
+    } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
+		esp_wifi_connect();
+		xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
+	} else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
+        ip_event_got_ip_t* event = (ip_event_got_ip_t*) event_data;
+        ESP_LOGI(TAG, "got ip:" IPSTR, IP2STR(&event->ip_info.ip));
+        xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
+    }
 }
 
 static void badge_ota_initialise_wifi(void)
 {
-	tcpip_adapter_init();
 	wifi_event_group = xEventGroupCreate();
-	ESP_ERROR_CHECK(esp_event_loop_init(badge_ota_event_handler, NULL));
+	ESP_ERROR_CHECK(esp_netif_init());
+
+	ESP_ERROR_CHECK(esp_event_loop_create_default());
+	esp_netif_create_default_wifi_sta();
+	
 	wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
 	ESP_ERROR_CHECK(esp_wifi_init(&cfg));
+
+	
+	esp_event_handler_instance_t instance_any_id;
+    esp_event_handler_instance_t instance_got_ip;
+    
+	ESP_ERROR_CHECK(esp_event_handler_instance_register(WIFI_EVENT,
+                                                        ESP_EVENT_ANY_ID,
+                                                        &badge_ota_event_handler,
+                                                        NULL,
+                                                        &instance_any_id));
+    ESP_ERROR_CHECK(esp_event_handler_instance_register(IP_EVENT,
+                                                        IP_EVENT_STA_GOT_IP,
+                                                        &badge_ota_event_handler,
+                                                        NULL,
+                                                        &instance_got_ip));
+
+	
+	
 	ESP_ERROR_CHECK(esp_wifi_set_storage(WIFI_STORAGE_RAM));
 
 	wifi_config_t wifi_config = { };
@@ -300,12 +312,12 @@ badge_ota_task(void *pvParameter)
 	/* determine partitions */
 	const esp_partition_t *part_running = esp_ota_get_running_partition();
 	assert(part_running != NULL);
-	ESP_LOGW(TAG, "Running from partition type %d subtype %d (offset 0x%08x)",
+	ESP_LOGW(TAG, "Running from partition type %d subtype %d (offset 0x%lu)",
 			part_running->type, part_running->subtype, part_running->address);
 
 	const esp_partition_t *part_update = esp_ota_get_next_update_partition(NULL);
 	assert(part_update != NULL);
-	ESP_LOGW(TAG, "Writing to partition type %d subtype %d (offset 0x%08x)",
+	ESP_LOGW(TAG, "Writing to partition type %d subtype %d (offset 0x%lu)",
 			part_update->type, part_update->subtype, part_update->address);
 
 	graphics_show("WiFi...", 0, false, true);

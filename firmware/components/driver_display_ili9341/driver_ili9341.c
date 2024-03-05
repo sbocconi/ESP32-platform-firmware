@@ -20,7 +20,7 @@
 #include <driver/gpio.h>
 
 #include "include/driver_ili9341.h"
-#include "include/driver_mch2021_stm32.h"
+#include "driver_mch2021_stm32.h"
 
 #ifdef CONFIG_DRIVER_ILI9341_ENABLE
 

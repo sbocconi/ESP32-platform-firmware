@@ -37,7 +37,7 @@ bool __state_unknown  = false;
 uint8_t* stateCurrent = NULL;
 const uint8_t* stateTarget  = NULL;
 
-xSemaphoreHandle driver_flipdotter_refresh_trigger = NULL;
+SemaphoreHandle_t driver_flipdotter_refresh_trigger = NULL;
 
 inline bool _get_pixel(uint8_t col, uint8_t row, uint8_t mod, const uint8_t* buffer)
 {

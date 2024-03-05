@@ -405,7 +405,7 @@ void render_tri_colored(triangle_3d triangle, uint32_t color)
 	matrix_3d_transform_point(stack_3d_global.current, &triangle.x2, &triangle.y2, &triangle.z2);
 	// Next project 3D -> 2D (x, y divided by z)
 	float verticalFieldOfView = 1.0f / tan(M_PI * 0.125f); // 12.5 degrees of vertical field of view
-	float aspectRatio = depthBuffer->width / depthBuffer->height;
+	// float aspectRatio = depthBuffer->width / depthBuffer->height;
 	float farClippingPlane = 1000.0f;
 	float nearClippingPlane = 0.01f;
 

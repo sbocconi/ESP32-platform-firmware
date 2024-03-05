@@ -5,6 +5,7 @@
 #include <fcntl.h>
 
 #include <esp_partition.h>
+#include "spi_flash_mmap.h"
 
 #include "flash_reader.h"
 

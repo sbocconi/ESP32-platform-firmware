@@ -25,6 +25,7 @@ See notes at end for glyph nomenclature & other tidbits.
 #include FT_GLYPH_H
 #include FT_TRUETYPE_DRIVER_H
 #include "../include/driver_framebuffer_font.h" // Adafruit_GFX font structures
+#include "freetype/ftmodapi.h"
 
 #define DPI 141 // Approximate res. of Adafruit 2.8" TFT
 

@@ -46,7 +46,7 @@ enum driver_eink_dev_t driver_eink_dev_type = DRIVER_EINK_DEFAULT;
 static spi_device_handle_t spi_bus = NULL;
 
 // forward declarations
-static esp_err_t driver_eink_dev_release_spi(void);
+// static esp_err_t driver_eink_dev_release_spi(void);
 static void driver_spi_pre_transfer_callback(spi_transaction_t *t);
 
 esp_err_t driver_eink_dev_reset(void) {
@@ -74,7 +74,7 @@ bool driver_eink_dev_is_busy(void)
 }
 
 // semaphore to trigger on gde-busy signal
-xSemaphoreHandle driver_eink_dev_intr_trigger = NULL;
+SemaphoreHandle_t driver_eink_dev_intr_trigger = NULL;
 
 void driver_eink_dev_busy_wait(void)
 {
@@ -126,7 +126,7 @@ static void driver_spi_pre_transfer_callback(spi_transaction_t *t)
 void driver_spi_send(const uint8_t *data, int len, const uint8_t dc_level)
 {
 	if (len == 0) return;
-	if (driver_eink_dev_type == DRIVER_EINK_NONE) return ESP_OK;
+	if (driver_eink_dev_type == DRIVER_EINK_NONE) return;
 
 	spi_transaction_t t = {
 		.length = len * 8,  // transaction length is in bits
@@ -181,7 +181,7 @@ void driver_eink_dev_write_command_stream_u32(uint8_t command, const uint32_t *d
 {
 	assert(SPI_TRANSFER_SIZE % 4 == 0);
 	
-	if (driver_eink_dev_type == DRIVER_EINK_NONE) return ESP_OK;
+	if (driver_eink_dev_type == DRIVER_EINK_NONE) return;
 
 	uint8_t* data_tmpbuf = heap_caps_malloc(SPI_TRANSFER_SIZE, MALLOC_CAP_8BIT);
 	ESP_LOGI(TAG, "Sending SPI stream of %d dwords...", datalen);

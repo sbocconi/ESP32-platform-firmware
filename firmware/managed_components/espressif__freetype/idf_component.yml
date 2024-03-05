@@ -1,0 +1,13 @@
+dependencies:
+  idf:
+    version: '>=4.4'
+description: freetype C library
+documentation: https://freetype.org/freetype2/docs/documentation.html
+issues: https://github.com/espressif/idf-extra-components/issues
+repository: https://github.com/espressif/idf-extra-components.git
+sbom:
+  manifests:
+  - dest: freetype
+    path: sbom_freetype.yml
+url: https://github.com/espressif/idf-extra-components/tree/master/freetype
+version: 2.13.0~1

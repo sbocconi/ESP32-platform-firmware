@@ -17,8 +17,8 @@
 
 static const char *TAG = "pca9555";
 
-xSemaphoreHandle driver_pca9555_mux = NULL;          // mutex for accessing driver_pca9555_state, driver_pca9555_handlers, etc..
-xSemaphoreHandle driver_pca9555_intr_trigger = NULL; // semaphore to trigger PCA95XX interrupt handling
+SemaphoreHandle_t driver_pca9555_mux = NULL;          // mutex for accessing driver_pca9555_state, driver_pca9555_handlers, etc..
+SemaphoreHandle_t driver_pca9555_intr_trigger = NULL; // semaphore to trigger PCA95XX interrupt handling
 driver_pca9555_intr_t driver_pca9555_handler[] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL }; // Per port interrupt handler
 TaskHandle_t driver_pca9555_intr_task_handle = NULL;
 uint8_t reg_config[2]   = {0xFF, 0xFF};
