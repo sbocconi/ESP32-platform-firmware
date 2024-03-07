@@ -7,12 +7,13 @@ set(includes
 )
 
 set(requires
-	"buses"
+	""
 )
 
 set(priv_requires
 	"driver"
 	"esp_timer"
+	"buses"
 )
 
 idf_component_register(

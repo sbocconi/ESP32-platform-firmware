@@ -7,11 +7,11 @@ set(includes
 )
 
 set(requires
-  	"driver"
+	""
 )
 
 set(priv_requires
-	""
+	"driver"
 )
 
 idf_component_register(

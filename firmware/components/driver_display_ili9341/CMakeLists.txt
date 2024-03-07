@@ -8,6 +8,7 @@ set(includes
 
 set(requires
 	"driver_io_mch2021_stm32"
+	""	
 )
 
 set(priv_requires

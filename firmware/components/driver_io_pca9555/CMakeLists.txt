@@ -7,11 +7,12 @@ set(includes
 )
 
 set(requires
-	"driver_io_pca9555"
-	"buses"
+	""
 )
 
 set(priv_requires
+	"driver_io_pca9555"
+	"buses"
 	"driver"
 	"nvs_flash"
 )

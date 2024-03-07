@@ -339,6 +339,7 @@ set(includes
 )
 
 set(requires
+	""
 	"driver_display_hub75"
 	"driver_display_gxgde0213b1"
 	"driver_display_erc12864"	
@@ -356,9 +357,9 @@ set(requires
 
 set(priv_requires
 	"esp_timer"
-	"esp_partition"
 	"nvs_flash"
 	"spi_flash"
+	"esp_partition"
 	"freetype"
 )
 

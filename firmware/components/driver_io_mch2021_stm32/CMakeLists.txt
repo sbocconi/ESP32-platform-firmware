@@ -7,10 +7,11 @@ set(includes
 )
 
 set(requires
-	"driver_io_pca9555"
+	""
 )
 
 set(priv_requires
+	"driver_io_pca9555"
 	"driver"
 )
 

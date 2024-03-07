@@ -7,10 +7,11 @@ set(includes
 )
 
 set(requires
-	"driver_input_mpr121"
+	""
 )
 
 set(priv_requires
+	"driver_input_mpr121"
 	"driver"
 	"fatfs"
 )

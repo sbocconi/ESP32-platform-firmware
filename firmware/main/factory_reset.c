@@ -137,7 +137,8 @@ static void factory_reset_task(void *pvParameter)
 				graphics_show_fr("Error 2", 0, false, true);
 				vTaskDelay(1000 / portTICK_PERIOD_MS);
 			} else {
-				err = esp_flash_erase_region(NULL, first_sector, amount_of_sectors);
+				// err = esp_flash_erase_region(NULL, first_sector, amount_of_sectors);
+				err = esp_partition_erase_range(partition, 0, partition->size);
 				if (err != ESP_OK) {
 					printf("Erase error %u\n", err);
 					graphics_show_fr("Erase failed!", 0, false, true);
