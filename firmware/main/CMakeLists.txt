@@ -1,10 +1,11 @@
 set(srcs
-	"main.c"
+	# "main.c"
+	# "mc_main.c"
 	"factory_reset.c"
 	"ota_update.c"
 	"platform.c"
 	"system.c"
-
+	"main.c"
 )
 
 set(includes
@@ -13,22 +14,26 @@ set(includes
 )
 
 set(requires
-	"buses"
-	"driver_display_st7789v"
-	"driver_framebuffer"
-	"driver_rtcmem"
-	"esp_event"
-	"resource_ssl_certs"
-	# "python"
+	"driver"
+	"nvs_flash"
+	"spi_flash"
+	"esp_partition"
 )
 
 set(priv_requires
-	"nvs_flash"
-	"spi_flash"
+	# "micropython"
+	"buses"
+	"driver_display_st7789v"
+	"driver_framebuffer"
+	"driver_rtcmem"	
+	"resource_ssl_certs"
 	"app_update"
 	"esp_wifi"
+	# "mbedtls"
+	# "esp_hw_support"
+	"esp_event"
+	# "esp_psram"
 	"mbedtls"
-	"esp_hw_support"
 )
 
 idf_component_register(
@@ -37,4 +42,3 @@ idf_component_register(
 	REQUIRES ${requires}
     PRIV_REQUIRES ${priv_requires}
 )
-target_compile_options(${COMPONENT_LIB} PRIVATE -Wno-error)

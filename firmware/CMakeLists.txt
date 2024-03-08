@@ -3,4 +3,7 @@
 cmake_minimum_required(VERSION 3.16)
 
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
+
 project(sha17)
+
+# target_add_binary_data(sha17.elf "../../micropython/ports/esp32/build-ESP32_GENERIC/micropython.bin" BINARY)
