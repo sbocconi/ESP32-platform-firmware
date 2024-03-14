@@ -17,14 +17,14 @@
 #include "nvs.h"
 #include "nvs_flash.h"
 
-#include "include/factory_reset.h"
-#include "driver_framebuffer.h"
-#include "driver_framebuffer_devices.h"
-
 #include "compositor.h"
 
 #include "esp_partition.h"
 #include "spi_flash_mmap.h"
+
+#include "include/factory_reset.h"
+#include "driver_framebuffer.h"
+#include "driver_framebuffer_devices.h"
 
 #define TAG "factory-reset"
 

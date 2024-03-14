@@ -1,7 +1,7 @@
 #ifndef PLATFORM_H
 #define PLATFORM_H
 
-#include "include/system.h"
+#include "system.h"
 
 #include "esp_log.h"
 #include "driver/gpio.h"

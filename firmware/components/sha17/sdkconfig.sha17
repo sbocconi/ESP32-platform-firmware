@@ -1,0 +1,194 @@
+#
+# Buses
+#
+CONFIG_BUS_VSPI_ENABLE=y
+CONFIG_PIN_NUM_VSPI_CLK=18
+CONFIG_PIN_NUM_VSPI_MOSI=5
+CONFIG_PIN_NUM_VSPI_MISO=-1
+CONFIG_PIN_NUM_VSPI_WP=-1
+CONFIG_PIN_NUM_VSPI_HD=-1
+CONFIG_BUS_VSPI_DMA_CHANNEL=2
+CONFIG_BUS_VSPI_MAX_TRANSFERSIZE=4094
+# CONFIG_BUS_HSPI_ENABLE is not set
+CONFIG_BUS_I2C0_ENABLE=y
+CONFIG_PIN_NUM_I2C0_DATA=26
+CONFIG_PIN_NUM_I2C0_CLK=27
+# CONFIG_PIN_PULL_I2C0_DATA is not set
+# CONFIG_PIN_PULL_I2C0_CLK is not set
+CONFIG_I2C0_MASTER_FREQ_HZ=400000
+# CONFIG_BUS_I2C1_ENABLE is not set
+# end of Buses
+
+#
+# Driver: E-ink display
+#
+CONFIG_DRIVER_EINK_ENABLE=y
+# CONFIG_DRIVER_EINK_TYPE_NONE is not set
+# CONFIG_DRIVER_EINK_TYPE_GDEH029A1 is not set
+CONFIG_DRIVER_EINK_TYPE_DEPG0290B1=y
+CONFIG_EPD_ROTATED_180=y
+CONFIG_PIN_NUM_EPD_RESET=23
+CONFIG_PIN_NUM_EPD_BUSY=22
+CONFIG_PIN_NUM_EPD_CS=19
+CONFIG_PIN_NUM_EPD_DATA=21
+# CONFIG_DRIVER_EINK_FORCE_1BPP is not set
+# end of Driver: E-ink display
+
+#
+# Driver: ERC12864 LCD display
+#
+# CONFIG_DRIVER_ERC12864_ENABLE is not set
+# end of Driver: ERC12864 LCD display
+
+#
+# Driver: Flipdot display (Otter)
+#
+# CONFIG_DRIVER_FLIPDOTTER_ENABLE is not set
+# end of Driver: Flipdot display (Otter)
+
+#
+# Driver: Fri3d camp 2018 badge display
+#
+# CONFIG_DRIVER_FRI3D_ENABLE is not set
+# end of Driver: Fri3d camp 2018 badge display
+
+#
+# Driver: gxgde0213b1 E-ink display
+#
+# CONFIG_DRIVER_GXGDE0213B1_ENABLE is not set
+# end of Driver: gxgde0213b1 E-ink display
+
+#
+# Driver: HUB75 LED panel display
+#
+# CONFIG_DRIVER_HUB75_ENABLE is not set
+# end of Driver: HUB75 LED panel display
+
+#
+# Driver: ILI9341 LCD display
+#
+# CONFIG_DRIVER_ILI9341_ENABLE is not set
+# end of Driver: ILI9341 LCD display
+
+#
+# Driver: LED matrix
+#
+# CONFIG_DRIVER_LEDMATRIX_ENABLE is not set
+# end of Driver: LED matrix
+
+#
+# Driver: Nokia 6100 LCD display
+#
+# CONFIG_DRIVER_NOKIA6100_ENABLE is not set
+# end of Driver: Nokia 6100 LCD display
+
+#
+# Driver: SSD1306 OLED display
+#
+# CONFIG_DRIVER_SSD1306_ENABLE is not set
+# end of Driver: SSD1306 OLED display
+
+#
+# Driver: ST7735 LCD display
+#
+# CONFIG_DRIVER_ST7735_ENABLE is not set
+# end of Driver: ST7735 LCD display
+
+#
+# Driver: ST7789V LCD display
+#
+# CONFIG_DRIVER_ST7789V_ENABLE is not set
+# end of Driver: ST7789V LCD display
+
+#
+# Driver: ICE40 FPGA
+#
+# CONFIG_DRIVER_ICE40_ENABLE is not set
+# end of Driver: ICE40 FPGA
+
+#
+# Driver: framebuffer support
+#
+CONFIG_DRIVER_FRAMEBUFFER_ENABLE=y
+# CONFIG_DRIVER_FRAMEBUFFER_FLIP is not set
+# CONFIG_DRIVER_FRAMEBUFFER_SWAP_R_AND_B is not set
+CONFIG_G_MATRIX_ENABLE=y
+CONFIG_MATRIX_STACK_SIZE=64
+CONFIG_G_NEW_TRIANGLE=y
+CONFIG_G_NEW_CIRCLE=y
+CONFIG_G_NEW_QUAD=y
+CONFIG_G_NEW_RECT=y
+CONFIG_G_NEW_TEXT=y
+CONFIG_LIB3D_ENABLE=y
+CONFIG_LIB3D_TRI_BUFFER_SIZE=32
+# end of Driver: framebuffer support
+
+#
+# Driver: MPR121 touch input
+#
+# CONFIG_DRIVER_MPR121_ENABLE is not set
+# end of Driver: MPR121 touch input
+
+#
+# Driver: Disobey 2019 SAMD I/O
+#
+# CONFIG_DRIVER_DISOBEY_SAMD_ENABLE is not set
+# end of Driver: Disobey 2019 SAMD I/O
+
+#
+# Driver: MCH2022 STM32 co-processor
+#
+# CONFIG_DRIVER_MCH2021_STM32_ENABLE is not set
+# end of Driver: MCH2022 STM32 co-processor
+
+#
+# Driver: PCA9555 I/O port expander
+#
+# CONFIG_DRIVER_PCA9555_ENABLE is not set
+# end of Driver: PCA9555 I/O port expander
+
+#
+# Driver: APA102 LEDs
+#
+# CONFIG_DRIVER_APA102_ENABLE is not set
+# end of Driver: APA102 LEDs
+
+#
+# Driver: Neopixel LED driver
+#
+# CONFIG_DRIVER_NEOPIXEL_ENABLE is not set
+# end of Driver: Neopixel LED driver
+
+#
+# Driver: microphone
+#
+# CONFIG_DRIVER_MICROPHONE_ENABLE is not set
+# end of Driver: microphone
+
+#
+# Driver: MPU6050 accelerometer
+#
+# CONFIG_DRIVER_MPU6050_ENABLE is not set
+# end of Driver: MPU6050 accelerometer
+
+#
+# Driver: LoRa radio
+#
+# CONFIG_DRIVER_LORA_ENABLE is not set
+# end of Driver: LoRa radio
+
+#
+# Driver: RTC memory
+#
+
+#
+# Driver: SD card
+#
+# CONFIG_DRIVER_SDCARD_ENABLE is not set
+# end of Driver: SD card
+
+#
+# Driver: AM2320 I2C temp/hum sensor
+#
+# end of Driver: AM2320 I2C temp/hum sensor
+# end of Component config
